@@ -1,7 +1,5 @@
 const Note = require('../models/Note');
 
-// @desc    Fetch all notes for a user
-// @route   GET /api/notes
 const getAllNotes = async (req, res, next) => {
   try {
     const userId = req.user?.id || req.query.user;
@@ -17,8 +15,6 @@ const getAllNotes = async (req, res, next) => {
   }
 };
 
-// @desc    Get a single note by ID
-// @route   GET /api/notes/:id
 const getNoteById = async (req, res, next) => {
   try {
     const note = await Note.findById(req.params.id);
@@ -27,7 +23,6 @@ const getNoteById = async (req, res, next) => {
       return res.status(404).json({ error: 'Note not found' });
     }
 
-    // Ownership check (if auth middleware is active)
     if (req.user && note.user.toString() !== req.user.id) {
       return res.status(401).json({ error: 'Not authorized to access this note' });
     }
@@ -38,8 +33,6 @@ const getNoteById = async (req, res, next) => {
   }
 };
 
-// @desc    Create a new note
-// @route   POST /api/notes
 const addNote = async (req, res, next) => {
   try {
     const { title, description, tag, user } = req.body;
@@ -54,7 +47,6 @@ const addNote = async (req, res, next) => {
       title,
       description,
       tag: tag || 'General'
-      // 'file' intentionally omitted for now (defaults to null)
     });
 
     res.status(201).json({
@@ -66,8 +58,7 @@ const addNote = async (req, res, next) => {
   }
 };
 
-// @desc    Update an existing note
-// @route   PUT /api/notes/:id
+
 const updateNote = async (req, res, next) => {
   try {
     const { title, description, tag } = req.body;
@@ -77,7 +68,6 @@ const updateNote = async (req, res, next) => {
       return res.status(404).json({ error: 'Note not found' });
     }
 
-    // Ownership check (if auth middleware is active)
     if (req.user && note.user.toString() !== req.user.id) {
       return res.status(401).json({ error: 'Not authorized to update this note' });
     }
@@ -102,8 +92,6 @@ const updateNote = async (req, res, next) => {
   }
 };
 
-// @desc    Delete an existing note
-// @route   DELETE /api/notes/:id
 const deleteNote = async (req, res, next) => {
   try {
     const note = await Note.findById(req.params.id);
@@ -111,7 +99,7 @@ const deleteNote = async (req, res, next) => {
       return res.status(404).json({ error: 'Note not found' });
     }
 
-    // Ownership check (if auth middleware is active)
+
     if (req.user && note.user.toString() !== req.user.id) {
       return res.status(401).json({ error: 'Not authorized to delete this note' });
     }

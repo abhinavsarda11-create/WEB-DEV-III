@@ -1,7 +1,5 @@
 const Product = require('../models/Product');
 
-// @desc    Create a new product
-// @route   POST /api/products
 const createProduct = async (req, res, next) => {
   try {
     const product = await Product.create(req.body);
@@ -11,8 +9,7 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-// @desc    Get all products with filtering, sorting & pagination
-// @route   GET /api/products
+
 const getAllProducts = async (req, res, next) => {
   try {
     const {
@@ -68,8 +65,7 @@ const getAllProducts = async (req, res, next) => {
   }
 };
 
-// @desc    Get single product by ID
-// @route   GET /api/products/:id
+
 const getProductById = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -84,8 +80,6 @@ const getProductById = async (req, res, next) => {
   }
 };
 
-// @desc    Update product details
-// @route   PUT /api/products/:id
 const updateProduct = async (req, res, next) => {
   try {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
@@ -105,8 +99,6 @@ const updateProduct = async (req, res, next) => {
   }
 };
 
-// @desc    Adjust stock safely (+ for restock, - for sale)
-// @route   PATCH /api/products/:id/stock
 const adjustStock = async (req, res, next) => {
   try {
     const { change } = req.body;
@@ -144,8 +136,7 @@ const adjustStock = async (req, res, next) => {
   }
 };
 
-// @desc    Delete product
-// @route   DELETE /api/products/:id
+
 const deleteProduct = async (req, res, next) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
@@ -165,8 +156,6 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
-// @desc    Low-Stock Alert Report (quantity <= reorderLevel)
-// @route   GET /api/products/low-stock
 const getLowStockReport = async (req, res, next) => {
   try {
     const lowStockItems = await Product.aggregate([
@@ -193,8 +182,6 @@ const getLowStockReport = async (req, res, next) => {
   }
 };
 
-// @desc    Category-wise Inventory Summary
-// @route   GET /api/products/summary
 const getCategorySummary = async (req, res, next) => {
   try {
     const summary = await Product.aggregate([

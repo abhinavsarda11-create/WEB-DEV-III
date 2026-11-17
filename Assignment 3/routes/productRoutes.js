@@ -11,11 +11,9 @@ const {
   getCategorySummary
 } = require('../controllers/productController');
 
-// Report & Aggregation Routes (Place before /:id)
 router.get('/low-stock', getLowStockReport);
 router.get('/summary', getCategorySummary);
 
-// Standard CRUD Routes
 router.route('/').get(getAllProducts).post(createProduct);
 
 router
@@ -24,7 +22,7 @@ router
   .put(updateProduct)
   .delete(deleteProduct);
 
-// Safe Stock Adjustment Route
+
 router.patch('/:id/stock', adjustStock);
 
 module.exports = router;

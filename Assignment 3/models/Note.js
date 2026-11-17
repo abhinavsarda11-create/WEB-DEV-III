@@ -26,7 +26,7 @@ const noteSchema = new mongoose.Schema(
     },
     file: {
       type: String,
-      default: null // Optional: will be populated when Multer is integrated
+      default: null 
     }
   },
   {
